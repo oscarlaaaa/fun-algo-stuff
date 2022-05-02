@@ -1,4 +1,4 @@
-# [Sort Array By Parity](https://leetcode.com/problems/sort-array-by-parity/)
+# [905. Sort Array By Parity](https://leetcode.com/problems/sort-array-by-parity/)
 
 Given an integer array ```nums```, move all the even integers at the beginning of the array followed by all the odd integers.
 
