@@ -1,5 +1,5 @@
 # LeetCode Solutions
-In this repository, I'll be archiving of all the various [LeetCode](https://leetcode.com/) solutions I came up with and improved upon throughout my grind. All problems will be labeled and organized according to difficulty along with my own notes on them. 
+In this repository, I'll be archiving of all the various [LeetCode](https://leetcode.com/) solutions I came up with and improved upon throughout my grind since I'm running out of space in my OneNote. All problems will be labeled and organized according to difficulty along with my own notes on them. 
 
 I'll be slowly migrating all the current solutions I have saved, so stay tuned B)
 
@@ -9,7 +9,7 @@ I'll be slowly migrating all the current solutions I have saved, so stay tuned B
 * Golang
 
 ## How Do You Pick What Questions To Do?
-I literally just do the daily problem (if I think I can finish it that day) every day, as well as previous weekly/biweekly contest questions.
+I literally just do the daily problem if I feel like it, plus previous weekly/biweekly contest questions if I'm feeling spicy.
 
 ## Problem Solving Process
 1. Take 5 minutes to formulate a plan based on constraints + topic
