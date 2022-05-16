@@ -5,8 +5,8 @@ I'll be slowly migrating all the current solutions I have saved, so stay tuned B
 
 ## Languages Used:
 * Python (Primary language)
+* C++ (tryna learn)
 * Java
-* Golang
 
 ## How Do You Pick What Questions To Do?
 I literally just do the daily problem if I feel like it, plus previous weekly/biweekly contest questions if I'm feeling spicy.
