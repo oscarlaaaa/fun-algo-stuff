@@ -2,8 +2,10 @@ from typing import *
 
 ## 2022-05-18 wtf why is this a hard level question????
 class Solution:
+    # directions to iterate
     DIRECTIONS = [[0, 1], [1, 0], [-1, 0], [0, -1]]
     def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        # memoization
         longest = [[-1 for _ in  range(len(matrix[i]))] for i in range(len(matrix))]
         
         for i in range(len(matrix)):
@@ -12,7 +14,6 @@ class Solution:
                     self.dfs(matrix, i, j, longest)
         
         return max([max(row) for row in longest])
-        
         
     def dfs(self, matrix, i, j, longest):
         if longest[i][j] != -1:
