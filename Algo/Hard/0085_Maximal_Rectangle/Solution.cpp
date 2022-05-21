@@ -1,3 +1,4 @@
+// 2022-05-21 (based off of the Maximal Square approach)
 class Solution {
 public:
     int maximalRectangle(vector<vector<char>>& matrix) {
