@@ -1,6 +1,3 @@
-from pydoc_data.topics import topics
-from string import digits
-import typing
 from typing import *
 from math import *
 
@@ -46,3 +43,31 @@ class Solution:
             largest_gap = max(largest_gap, cur_list[i+1] - cur_list[i])
             
         return largest_gap
+
+
+## 2022-08-15 (Bucket sort)
+class Solution:
+    def maximumGap(self, nums: List[int]) -> int:
+        min_val, max_val = min(nums), max(nums)
+        
+        if min_val == max_val or len(nums) < 2:
+            return 0
+        
+        ## each bucket will hold a range of vals and buckets will
+        ## only store min and max of each range
+        bucket_size = ceil((max_val - min_val) / (len(nums)-1))
+        buckets = [[inf, -inf] for _ in range(len(nums))]
+        
+        for num in nums:
+            bucket_idx = (num - min_val)//bucket_size
+            buckets[bucket_idx][0] = min(buckets[bucket_idx][0], num)
+            buckets[bucket_idx][1] = max(buckets[bucket_idx][1], num)
+        
+        buckets = [bucket for bucket in buckets if bucket[0] != inf]
+        
+        largest_gap = bucket_size
+        for i in range(len(buckets)-1):
+            largest_gap = max(largest_gap, buckets[i+1][0] - buckets[i][1])
+            
+        return largest_gap
+        
