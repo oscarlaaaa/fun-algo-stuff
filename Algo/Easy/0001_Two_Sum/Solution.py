@@ -34,3 +34,13 @@ class Solution:
                 dic[target - nums[i]] = i
         
         return None
+    
+    # 2022-08-17
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        need = dict()
+        for i, num in enumerate(nums):
+            if num in need:
+                return [i, need[num]]
+            need[target-num] = i
+        return [-1, -1]
+    
