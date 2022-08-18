@@ -39,7 +39,7 @@ class Solution:
         return max(len(group) for group in groups.values())
                 
 
-## 2022-07-04 (Pseudo-'Linked List' approach)
+## 2022-07-04 (Doubly-Linked List approach)
 class Solution:   
     def longestConsecutive(self, nums: List[int]) -> int:
         nodes = dict()
@@ -74,4 +74,44 @@ class Solution:
             longest = max(longest, right - left + 1)
             
         return longest
+
+## 2022-8-18 (Single-Linked-List approach)
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if len(nums) == 0:
+            return 0
+        
+        ## connecting the nodes
+        has_next = dict()
+        for num in nums:
+            if num in has_next:
+                continue
+            has_next[num] = False
+            if num-1 in has_next:
+                has_next[num-1] = True
+            if num+1 in has_next:
+                has_next[num] = True
+        
+        ## traverse the nodes to find the longest consecutive chain
+        max_length = 1
+        lengths = dict()
+        for val in has_next.keys():
+            if val in lengths:
+                continue
+            
+            cur = val
+            length = 0
+            while cur in has_next:
+                if cur in lengths:
+                    length += lengths[cur]
+                    break
+                ## we can mark intermediate values as whatever since they won't
+                ## be accessed again - we just want to mark them as seen
+                lengths[cur] = -1 
                 
+                length += 1
+                cur += 1
+            lengths[val] = length ## memoize in case there's a value before this
+            max_length = max(max_length, length)
+            
+        return max_length
