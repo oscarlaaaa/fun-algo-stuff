@@ -1,5 +1,41 @@
 from typing import *
 
+## 2021-11-25
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        if len(nums) == 0:
+            return []
+        
+        nums.sort()
+        output = []
+        
+        i = 0
+        while i < len(nums)-2:
+            target = nums[i] * -1
+            seen = set()
+            
+            j = i+1
+            while j < len(nums):
+                if nums[j] in seen:
+                    output.append([nums[i], target - nums[j], nums[j]])
+                    
+                    current = nums[j]
+                    while j+1 < len(nums) and nums[j+1] == current:
+                        j = j+1
+                    
+                else:
+                    seen.add(target - nums[j])
+                
+                j = j+1
+            
+            current = nums[i]
+            while i+1 < len(nums) and nums[i+1] == current:
+                i = i+1
+            
+            i = i+1
+                
+        return output
+
 ## 2022-08-20 (maps and sets)
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
