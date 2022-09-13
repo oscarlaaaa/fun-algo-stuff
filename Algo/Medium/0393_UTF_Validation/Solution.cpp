@@ -16,16 +16,14 @@ public:
             int firstBit = data[pointer++];
             
             // determine # of bytes in the char
-            int numOfBytes;
-            if (firstBit >> 7 == 0) {
-                numOfBytes = 0;
-            } else if (firstBit >> 5 == 0b110) {
+            int numOfBytes = 0;
+             if (firstBit >> 5 == 0b110) {
                 numOfBytes = 1;
             } else if (firstBit >> 4 == 0b1110) {
                 numOfBytes = 2;
             } else if (firstBit >> 3 == 0b11110) {
                 numOfBytes = 3;
-            } else {
+            } else if (firstBit >> 7) {
                 // invalid first bit
                 return false;
             }
