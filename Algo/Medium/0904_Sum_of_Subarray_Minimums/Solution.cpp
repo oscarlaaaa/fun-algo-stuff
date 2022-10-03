@@ -31,7 +31,7 @@ public:
     int sumSubarrayMins(vector<int>& arr) {
         int n = arr.size();
         ll total = 0;
-        deque<int> minimums;
+        deque<int> minimums; // tracks elements from low to high, stores their indices
         for (int i=0; i<n; i++) {
             int numAffect = n-i;
             int lowestPop = i;
@@ -39,9 +39,11 @@ public:
                 int lastIdx = minimums.back();
                 minimums.pop_back();
                 int lastLastIdx = minimums.empty() ? -1 : minimums.back();
+
+                // retroactively adjust running total
                 total = (total + 1LL*(arr[i] - arr[lastIdx])*numAffect*(lastIdx-lastLastIdx));
             }
-            // assume that current one 
+            // record as if current value is the minimum for (length - index) subarrays
             total += 1LL*arr[i]*numAffect;
             minimums.push_back(i);
         }
