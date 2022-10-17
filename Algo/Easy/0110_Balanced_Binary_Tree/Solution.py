@@ -48,4 +48,20 @@ class Solution:
         
         depth = self.findDepth(root)
         return depth != -1
+
+# 2022-10-16 (recursive + class variable)
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        self.balanced = True
+        self.check_node_height(root)
+        return self.balanced
     
+    def check_node_height(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        
+        right = self.check_node_height(root.right)
+        left = self.check_node_height(root.left)
+        
+        self.balanced = self.balanced and abs(right-left) <= 1
+        return max(right, left)+1
