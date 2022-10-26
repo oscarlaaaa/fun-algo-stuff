@@ -20,3 +20,22 @@ class Solution:
                 left += 1
         
         return longest
+
+## 2022-10-25
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        longest = 0
+        n = len(s)
+        seen = set()
+        back, front = 0, 0
+        while front < n:
+            while front < n and s[front] not in seen:
+                seen.add(s[front])
+                front += 1
+            
+            longest = max(longest, front-back)
+            while front < n and s[front] in seen:
+                seen.remove(s[back])
+                back += 1
+        
+        return longest
