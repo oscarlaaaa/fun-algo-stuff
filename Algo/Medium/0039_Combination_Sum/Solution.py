@@ -21,3 +21,21 @@ class Solution:
                 current_list.append(cand)
                 Solution.findCombination(candidates, current_list, target - cand, combos)
                 current_list.pop()
+
+## 2022-11-08 (iterative)
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        combinations = [[] for _ in range(target+1)]
+        for c in candidates:
+            if c > target:
+                continue
+            combinations[c].append([c])
+        
+        for i in range(target):
+            for seq in combinations[i]:
+                for c in candidates:
+                    if c < seq[-1] or i+c > target:
+                        continue
+                    combinations[i+c].append(seq + [c])
+                
+        return combinations[target]
