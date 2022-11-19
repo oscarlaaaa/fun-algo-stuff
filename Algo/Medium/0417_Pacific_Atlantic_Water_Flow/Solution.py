@@ -43,3 +43,46 @@ class Solution:
                 if atlantic[i][j] and pacific[i][j]:
                     output.append([i, j])
         return output
+
+## 2022-11-02 (memoized DFS but cleaner B))
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        """
+        topleft = pacific ocean
+        botright = atlantic ocean
+
+        input: heights were height[r][c] = height above sea level
+        output: lsit of coordinates where [i,j] is the cell that rainwater can
+                flow to both oceans
+        
+        constraint:
+        - 1 <= m and n <= 200
+        - no negative heights
+        - corners guaranteed to flow to both
+
+        approach:
+        - for each cell along i=0 and j=0, flow upwards to cells that can reach the pacific
+        - for each cell along i=n-1 and j=m-1, flow upwards to cells that can reach the atlantic
+        - record every cell that matches both
+        """
+        def flow_upwards(heights, x, y, ocean):
+            if (x, y) in ocean:
+                return
+            
+            ocean.add((x, y))
+            for i, j in [(1,0), (0,1), (-1,0), (0,-1)]:
+                if 0 <= x+i < len(heights) and 0 <= y+j < len(heights[0]) and heights[x][y] <= heights[x+i][y+j]:
+                    flow_upwards(heights, x+i, y+j, ocean)
+
+
+        m, n = len(heights), len(heights[0])
+        atlantic, pacific = set(), set()
+        for i in range(m):
+            flow_upwards(heights, i, 0, atlantic)
+            flow_upwards(heights, i, n-1, pacific)
+        
+        for j in range(n):
+            flow_upwards(heights, 0, j, atlantic)
+            flow_upwards(heights, m-1, j, pacific)
+        
+        return list(atlantic & pacific)
