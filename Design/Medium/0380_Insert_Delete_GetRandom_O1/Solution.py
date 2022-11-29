@@ -1,4 +1,5 @@
 ## 2022-11-28
+import random
 class RandomizedSet:
     """
     - utilize a list, and a map
