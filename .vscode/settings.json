@@ -49,6 +49,10 @@
         "xhash": "cpp",
         "algorithm": "cpp",
         "deque": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "bitset": "cpp",
+        "queue": "cpp"
     }
 }
