@@ -82,3 +82,52 @@ public:
         return concatenated;
     }
 };
+
+// 2023-01-27 (tabulated DP)
+class Solution {
+public:
+    vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
+        /*
+            input: a list of strings
+            output: all concatenated words in a given list of words
+
+            approach:
+            - shove all original words within a set
+            - iterate through the list of words
+                - initialize a tabulative DP list, where dp[i] means there it is possible to
+                  un-concatenate a word to create a string starting at index i from the original
+                - use a double for loop to check every single possible substring if it matches
+                  with any original word
+                - mark the areas that are reachable, and skip if the left bound is ever not reachable
+            - if a word has its dp list at index word.length() reachable, that means that
+              its possible to concat original words to form that word, and we can add it to our
+              output list
+        */
+        unordered_set<string> originalWords(words.begin(), words.end());
+        vector<string> concatenated;
+        for (string& word : words) {
+            int n = word.length();
+            vector<bool> dp(n+1);
+            dp[0] = true;
+
+            for (int i=0; i<n; i++) {
+                if (!dp[i])
+                    continue;
+
+                for (int j=i+1; j<=n; j++) {
+                    // prevent a word from matching with itself
+                    if (i == 0 && j == n)
+                        continue;
+
+                    if (originalWords.count(word.substr(i, j-i))) {
+                        dp[j] = true;
+                    }
+                }
+            }
+
+            if (dp[n])
+                concatenated.push_back(word);
+        }
+        return concatenated;
+    }
+};
