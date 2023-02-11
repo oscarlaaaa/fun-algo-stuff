@@ -1,5 +1,6 @@
 ## 2022-03-01 (greedy)
 import math
+from typing import *
 
 class Solution:
     def jump(self, nums: List[int]) -> int:
