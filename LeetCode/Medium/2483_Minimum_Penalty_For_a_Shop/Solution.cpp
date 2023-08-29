@@ -43,3 +43,45 @@ public:
         return idx;
     }
 };
+
+// 2023-08-28 (rolling sum)
+class Solution {
+public:
+    int bestClosingTime(string customers) {
+        /*
+        notes:
+        - we get penalties for:
+            - staying open and having no customers come
+            - staying closed and having customers come
+        - just want to MINIMIZE penalties
+        - we have to find the earliest hour to incur a minimal penalty
+
+        - probably like a rolling sum of penalties?
+            - penalize Y from right->left
+            - penalize N from left->right
+        - can close from 0 to N, so we need N+1 sized list
+
+        analysis:
+        - time = O(n)
+        - space = O(n)
+        */
+        int n = customers.length();
+        vector<int> penaltiesLtoR(n+1), penaltiesRtoL(n+1);
+        for (int i=1; i<=n; i++) {
+            penaltiesLtoR[i] = penaltiesLtoR[i-1] + (customers[i-1] == 'N' ? 1 : 0);
+        }
+        for (int i=n-1; i>=0; i--) {
+            penaltiesRtoL[i] = penaltiesRtoL[i+1] + (customers[i] == 'Y' ? 1 : 0);
+        }
+
+        int minimumDay = 0, minimumPenalty = INT_MAX;
+        for (int i=0; i<=n; i++) {
+            int totalPenalty = penaltiesLtoR[i] + penaltiesRtoL[i];
+            if (totalPenalty < minimumPenalty) {
+                minimumDay = i;
+                minimumPenalty = totalPenalty;
+            }
+        }
+        return minimumDay;
+    }
+};
