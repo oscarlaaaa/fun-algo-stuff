@@ -28,3 +28,43 @@ public:
         return memo[n][target];
     }
 };
+
+// 2023-12-25 (tabulation dp)
+class Solution {
+public:
+    int numRollsToTarget(int n, int k, int target) {
+        /*
+        notes:
+        - need to find number of permutations of dice to get target
+        - seems like this is just DP?
+        - n and k limited to 30, so we can just do sums between
+          0 and target, as well as n slots or something?
+        - can just do 2 vectors? maps? and swap data to minimize space
+
+        analysis:
+        - time = O(nkt)
+        - space = O(t)
+        */
+        const int MOD = 1e9 + 7;
+        vector<int> sumCounts(target+1, 0);
+        sumCounts[0] = 1;
+
+        for (int i=0; i<n; i++) {
+            vector<int> nextSumCounts(target+1, 0);
+            for (int curSum=0; curSum<=target; curSum++) {
+                if (sumCounts[curSum] == 0) {
+                    continue;
+                }
+                for (int roll=1; roll<=k; roll++) {
+                    if (curSum+roll > target) {
+                        break;
+                    }
+                    nextSumCounts[curSum+roll] = (1LL * nextSumCounts[curSum+roll] + sumCounts[curSum])%MOD;
+                }
+            }
+            sumCounts.swap(nextSumCounts);
+        }
+
+        return sumCounts[target];
+    }
+};
