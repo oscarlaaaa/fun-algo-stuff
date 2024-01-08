@@ -43,3 +43,58 @@ public:
         return prev(maxProfit.end())->second;
     }
 };
+
+// 2024-01-05 (heap)
+class Solution {
+public:
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+        /*
+        notes:
+        - n jobs with start/end times, and want to maximize profit
+        - we probably need to sort by start-time so that we have some order in our iteration
+        - we also need to keep a sorted list of end-times so that we can add onto the profit
+          from previous times
+        - while iterating, track current largest profit from the encounters we process?
+          - we can track profit by using a minheap that stores {endtime, curmaxprofit + jobprofit} and
+            popping off the top until the next endtime is > our current start time
+
+        analysis:
+        - time = O(nlogn)
+        - space = O(n)
+        */
+        int n = startTime.size();
+
+        // sort jobs together according to start-time
+        std::vector<pair<int, pair<int, int>>> jobs;
+        for (int i=0; i<n; i++) {
+            jobs.push_back({profit[i], {startTime[i], endTime[i]}});
+        }    
+        std::sort(jobs.begin(), jobs.end(), [](pair<int, pair<int, int>>& a, pair<int, pair<int, int>>& b) {
+            return a.second.first < b.second.first;
+        });
+
+        std::priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
+
+        int maxProfit = 0;
+        for (auto [profit, time] : jobs) {
+            auto [startTime, endTime] = time;
+
+            // grab profits from previous start times and use the largest one so far
+            while (!minHeap.empty() && startTime >= minHeap.top().first) {
+                maxProfit = std::max(maxProfit, minHeap.top().second);
+                minHeap.pop();
+            }
+
+            // push our resultant profit for use at/after our end-time
+            minHeap.push({endTime, maxProfit + profit});
+        }
+
+        // for the last ones we haven't processed yet
+        while (!minHeap.empty()) {
+            maxProfit = std::max(maxProfit, minHeap.top().second);
+            minHeap.pop();
+        }
+
+        return maxProfit;
+    }
+};
